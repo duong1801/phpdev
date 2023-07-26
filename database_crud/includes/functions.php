@@ -54,7 +54,7 @@ function createGetId($table, $data = [])
     return false;
 }
 
-function update($table, $data = [], $condition)
+function update($table, $data = [], $condition = '')
 {
     $keys = array_keys($data);
     $update = '';
@@ -97,5 +97,21 @@ function delete ($table,$condition){
 function getDateFormat ($date,$format){
     $dateObj = date_create($date);
     return date_format($dateObj,$format);
+}
+
+
+function dd ($arr){
+    echo "<pre>";
+    print_r($arr);
+    echo "<pre>";
+    
+}
+
+
+function getOperator ($str){
+    if(strpos($str,'WHERE')){
+        return ' AND ';
+    }
+    return ' WHERE ';
 }
 ?>
