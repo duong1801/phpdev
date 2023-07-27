@@ -88,7 +88,7 @@ function getRows ($sql,$data = []){
 
 
 function delete ($table,$condition){
-    $sql = "DELETE FROM {$table} WHERE ${condition}";
+    $sql = "DELETE FROM {$table} WHERE {$condition}";
     $status = query($sql);
     return $status;
 }
@@ -104,7 +104,6 @@ function dd ($arr){
     echo "<pre>";
     print_r($arr);
     echo "<pre>";
-    
 }
 
 
@@ -113,5 +112,31 @@ function getOperator ($str){
         return ' AND ';
     }
     return ' WHERE ';
+}
+
+
+function getPaginateUrl($page){
+    $isPage = false;
+    $currentIndex = null;
+    $query = [];
+    if (!empty($_SERVER['QUERY_STRING'])) {
+        $query = explode('&', $_SERVER["QUERY_STRING"]);
+       
+        foreach ($query as $index => $item) {
+            $itemArr = explode('=', $item);
+            if ($itemArr[0] == "page") {
+                $isPage = true;
+                $currentIndex = $index;
+                break;
+            }
+        }
+    }
+    if (!$isPage) {
+        array_push($query, "page=" . $page);
+    }
+    else {
+        $query[$currentIndex] = "page=" . $page;
+    }
+    return "?".implode('&', $query);
 }
 ?>
